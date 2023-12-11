@@ -1,0 +1,19 @@
+CREATE PROCEDURE RelatorioDiario()
+BEGIN
+    CREATE TEMPORARY TABLE TempRelatorioDiario (
+        data_compra DATE,
+        total_produtos INT
+    );
+
+     INSERT INTO TempRelatorioDiario (data_compra, total_produtos)
+    SELECT 
+        data_compra,
+        SUM(quantidade) AS total_produtos
+    FROM vendas
+    GROUP BY data_compra;
+
+    SELECT * FROM TempRelatorioDiario;
+
+   
+    DROP TEMPORARY TABLE IF EXISTS TempRelatorioDiario;
+END //
